@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -38,7 +43,16 @@ public class EmployeeController {
 //	public void setEdao(EmployeeDAO edao) {
 //		this.edao = edao;
 //	}
-	
+
+
+	//swagger documentation
+	@Operation(summary = "get employee", description = "get employee by id", tags = "Get")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "found the employee", content = {@Content(mediaType = "application/json",
+			schema = @Schema(implementation = EmployeeService.class))}),
+			@ApiResponse(responseCode = "404", description = "employees not found", content = @Content)
+	})
+
 	@GetMapping(value = "/{employeeId}", produces = "application/json")
 	public ResponseEntity<Employee> getEmployeeById(@PathVariable int employeeId) {
 //		Optional<Employee> emp =  employeeRepository.findById(employeeId);
@@ -51,6 +65,14 @@ public class EmployeeController {
 		
 		return new ResponseEntity<Employee>(emp, HttpStatus.NOT_FOUND);
 	}
+
+	//swagger documentation
+	@Operation(summary = "get employees", description = "get list of employees", tags = "Get")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "found the employee", content = {@Content(mediaType = "application/json",
+					schema = @Schema(implementation = EmployeeService.class))}),
+			@ApiResponse(responseCode = "404", description = "employees not found", content = @Content)
+	})
 	@GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<List<Employee>> getEmployee() {
 		return new ResponseEntity<List<Employee>>(employeeService.findAllEmployee(),HttpStatus.OK);
