@@ -8,9 +8,8 @@ import org.springframework.context.annotation.Configuration;
 
 import com.nisum.bootdemo1.beans.Address;
 import com.nisum.bootdemo1.beans.Employee;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-@EnableSwagger2
+//@EnableSwagger2
 @Configuration
 @SpringBootApplication
 //@ComponentScan(basePackages="xyz.abc")
